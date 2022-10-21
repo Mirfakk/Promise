@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <h2 class="page-header">Promise 初体验</h2>
+    <button class="btn btn-primary" id="btn">点击抽奖</button>
+  </div>
+  <script>
+    //生成随机数
+    function rand(m, n) {
+      return Math.ceil(Math.random() * (n - m + 1) + m - 1);
+    }
+    /*
+      点击按钮，1s后显示是否中奖（概率30%）
+      弹框中奖与未中奖！
+    */
+    //获取元素对象
+    const btn = document.querySelector('#btn');
+    //绑定点击事件
+    btn.addEventListener('click', function() {
+      //点击后触发的函数
+      //   setTimeout(() => {
+      //     //实现30%概率,获取1-100的随机数，只要小于30就是中奖
+      //     let n = rand(1, 100);
+      //     // console.log(n);
+      //     //判断是否小于30
+      //     if (n <= 30) {
+      //       alert('恭喜中奖！');
+      //     } else {
+      //       alert('遗憾没中奖！');
+      //     }
+      //   }, 1000)
+
+
+      //使用promise形式实现
+      //promise是一个构造函数，所以可以进行对象实例化
+      //可以包裹一个异步操作
+      //promise在实例化中需要接收一个参数
+      //这个参数是函数类型的值,该函数有两个形参
+      //resolve 解决 ：函数类型数据，异步任务成功调用resolve
+      //reject 拒绝 ：函数类型数据，异步任务失败调用reject
+      const p = new Promise((resolve, reject) => {
+        //点击后触发的函数
+        setTimeout(() => {
+          //实现30%概率,获取1-100的随机数，只要小于30就是中奖
+          let n = rand(1, 100);
+          // console.log(n);
+          //判断是否小于30
+          if (n <= 30) {
+            //异步任务成功调用resolve，
+            resolve(n);//会将promise对象（这里指 p ）的状态设为成功
+          } else {
+            //异步任务失败调用reject
+            reject(n); //会将promise对象（这里指 p ）的状态设为失败
+          }
+        }, 1000)
+      });
+
+      //对成功和失败之后做处理
+      //调用 then 方法，then是实例化对象上的一个方法
+      //then方法需要接收两个参数，都是函数类型的值
+      //第一个函数时成功时的回调函数，第二个是失败时回调
+      //  val 形参，可以自定义 
+      p.then((val) => {
+        alert('恭喜中奖！' + val);
+      }, (val2) => {
+        alert('遗憾未中奖！' + val2);
+      });
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+      封装一个函数 sendAJAX 发送 GET AJAX请求
+      参数 URL
+      返回结果是Promise对象
+    */
+    function sendAJAX(url) {
+      //返回promise对象
+      return new Promise((reslove, reject) => {
+        //实例化
+        const xhr = new XMLHttpRequest();
+        //开启
+        xhr.open('GET', url);
+        //发送
+        xhr.send();
+        //处理结果
+        xhr.onreadystatechange = function() {
+          //判断readyState状态是否为4
+          if (xhr.readyState == 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              //成功就调用reslove函数
+              reslove(xhr.response);
+            } else {
+              reject(xhr.status);
+            }
+          }
+        }
+      })
+    }
+    sandAJAX('http://127.0.0.1:80').then(value => {
+      console.log(value);
+    }, reason => {
+      console.warn(reason);
+    });
+  </script>
+</body>
+
+</html>
