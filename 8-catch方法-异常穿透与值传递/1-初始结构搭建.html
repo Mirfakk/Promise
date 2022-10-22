@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>对try.catch进行了封装</title>
   <!-- 引入自定义Promise.js  -->
-  <script src="./promise.js"></script>
+  <!-- <script src="./promise.js"></script> -->
 </head>
 
 <body>
@@ -16,17 +16,21 @@
     let p = new Promise((resolve, reject) => {
       setTimeout(() => {
         //resolve的作用：改变状态，设置结果值
-        // resolve('ok!');
-        reject('error');
+        resolve('ok!');
+        // reject('error');
         // throw 'error!!';
       }, 100)
     })
-    //执行catch方法
-    let res = p.catch(reason => {
+    //执行then方法
+    p.then().then((value) => {
+      console.log(222);
+    }).then((value) => {
+      console.log(333);
+    }).catch(reason => {
       console.warn(reason);
     })
 
-    console.log(res);
+    // console.log(res);
   </script>
 </body>
 
