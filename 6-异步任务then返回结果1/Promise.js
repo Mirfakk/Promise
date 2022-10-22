@@ -58,6 +58,7 @@ function Promise(executor) {
 
 //添加then方法,Promise原型链上的then，里面包含两个形参，对应着调用该方法的两个实参。
 Promise.prototype.then = function(onResolved, onRejected) {
+  const self = this;
   return new Promise((resolve,reject)=>{
   //在此调用回调函数，执行前需要先判断状态，根据状态执行相对应的回调函数
   //这里的this指向的就是实例对象
@@ -97,8 +98,47 @@ Promise.prototype.then = function(onResolved, onRejected) {
     //因为不确定状态为成功或者失败，所以不能执行
     this.callbacks.push({
       //这里采用键值对的形式，键和值相等可省略
-      onResolved: onResolved,
-      onRejected: onRejected
+      onResolved: function() {
+        try {
+          //执行成功的回调函数
+        //成功结果就是当前实例对象当中的PromiseResult
+        let result = onResolved(self.PromiseResult);
+        //判断结果是否为Promise对象
+        if (result instanceof Promise) {
+          //如果是，则根据成功失败执行对应的回调函数
+          result.then((value) => { 
+            //成功调用resolve，并且将参数传递
+            resolve(value);
+          }, (reason) => {
+            //失败调用reject，并且将参数传递
+            reject(reason);
+          })
+        } else {
+          //若不是Promise对象，则状态为成功html25行的res状态为成功
+          resolve(result);
+        }
+        } catch (e) {
+          reject(e);
+        }
+      },
+      onRejected: function() {
+        try {
+          //执行失败的回调函数
+        //失败结果就是当前实例对象当中的PromiseResult
+          let result = onRejected(self.PromiseState);
+          if (result instanceof Promise) {
+            result.then((value) => { 
+              resolve(value);
+            }, (reason) => {
+              reject(reason);
+            })
+          } else {
+            resolve(result);
+          }
+        } catch (e) {
+          reject(e);
+       }
+      }
     });
     }
   })
