@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>all 封装</title>
+  <!-- 引入自定义Promise.js  -->
+  <script src="./promise.js"></script>
+</head>
+
+<body>
+  <script>
+    let p1 = new Promise((resolve, reject) => {
+      resolve('success!!');
+    });
+    let p2 = Promise.resolve('success');
+    let p3 = Promise.resolve('oh Yeah');
+
+    //调用all方法其中的结果有一个失败了，那么all的结果也就失败了
+    let result = Promise.all([p1, p2, p3]);
+
+    console.log(result);
+
+  </script>
+</body>
+
+</html>

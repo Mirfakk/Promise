@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async结合await发送ajax</title>
+</head>
+
+<body>
+  <button id="btn">点击发送</button>
+  <script>
+    /**
+           * 封装一个函数 sendAJAX 发送 GET AJAX 请求
+           * 参数   URL
+           * 返回结果 Promise 对象
+           */
+    function sendAJAX(url) {
+      {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();//创建对象
+          xhr.responseType = 'json';
+          xhr.open("GET", url);//初始化
+          xhr.send();//发送
+          //处理结果
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4) {
+              if (xhr.status >= 200 && xhr.status < 300) {//判断成功
+                resolve(xhr.response);//成功的结果
+              } else {
+                reject(xhr.status);//响应状态码
+              }
+            }
+          }
+        })
+      }
+    }
+
+    //点击按钮，获取按钮元素
+    try {
+      let btn = document.querySelector('#btn');
+      //绑定监听事件
+      btn.addEventListener('click', async function() {
+        //获取接口的数据
+        let data = await sendAJAX('http://127.0.0.1:80/user');
+        console.log(data);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  </script>
+</body>
+
+</html>

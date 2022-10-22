@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //await需要放在async函数中
+    async function main() {
+      let p = new Promise((resolve, reject) => {
+        // resolve('ok!');
+        reject('err');
+      })
+      //1.右侧为promise对象的情况
+      // let res = await p;
+      //如果await右侧是promise，则会返回对象成功的值
+      // console.log(res);//ok!
+      //2.如果右侧为其他类型的数据
+      // let res1 = await 'success';
+      // console.log(res1);//则返回该数据
+      //3.右侧为失败状态，那么会抛出错误，我们通过try.catch捕获
+      try {
+        let res2 = await p;
+      } catch (e) {
+        console.warn(e);//捕获到失败的结果
+      }
+    }
+    main();
+  </script>
+</body>
+
+</html>

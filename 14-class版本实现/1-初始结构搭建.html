@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>将promise封装为类</title>
+  <!-- 引入自定义Promise.js  -->
+  <script src="./promise.js"></script>
+</head>
+
+<body>
+  <script>
+    // let p1 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     // resolve('ok~');
+    //     reject('err')
+    //   }, 1000);
+    // });
+
+    // //回调函数是异步执行，这个回调函数指的是then指定的
+    // p1.then((value) => {
+    //   console.log(value);
+    // }, (reason) => {
+    //   console.warn(reason);
+    // })
+    console.log(Promise.resolve('OKLL'));
+  </script>
+</body>
+
+</html>

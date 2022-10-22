@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回调函数是异步执行</title>
+  <!-- 引入自定义Promise.js  -->
+  <script src="./promise.js"></script>
+</head>
+
+<body>
+  <script>
+    let p1 = new Promise((resolve, reject) => {
+      reject('success!!');
+      console.log(333);
+    });
+
+    //回调函数是异步执行，这个回调函数指的是then指定的
+    p1.then((value) => {
+      console.log(111);
+    }, (reason) => {
+      console.log(111);
+    })
+    console.log(222);
+
+  </script>
+</body>
+
+</html>
