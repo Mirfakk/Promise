@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <h2 class="page-header"> promise 封装 ajax请求 </h2>
+    <button class="btn btn-primary" id="btn">点击发送 ajax</button>
+  </div>
+  <script>
+    //接口地址 https:api.apiopen.top/getJoke
+    //获取元素对象
+    const btn = document.querySelector('#btn');
+    //点击事件
+    btn.addEventListener('click', function() {
+      /*
+      XMLHttpRequest 对象能够：
+      在不重新加载页面的情况下更新网页
+      在页面已加载后从服务器请求数据
+      在页面已加载后从服务器接收数据
+      在后台向服务器发送数据*/
+
+      //使用Promise进行封装
+      const p = new Promise((resolve, reject) => {
+        //1.创建对象
+        const xhr = new XMLHttpRequest();
+        //2.对象的初始化
+        xhr.open('GET', 'http://127.0.0.1:80/user');
+        //3.发送
+        xhr.send();
+        //4.处理响应结果,当readyState改变时会触发onreadystatechange事件
+        xhr.onreadystatechange = ('click', function() {
+          //判断readyState的值，4: 请求已完成，且响应已就绪
+          if (xhr.readyState == 4) {
+            //判断响应状态码，2开头表示成功
+            if (xhr.status >= 200 && xhr.status < 300) {
+              //若成功，将结果在控制台输出响应体response(里面存储的是响应体)
+              // console.log(xhr.response);
+              //成功的结果是响应体，所以传递进去
+              resolve(xhr.response);
+            } else {
+              //若失败，将结果在控制台输出响应状态码
+              // console.log(xhr.status);
+              //失败的结果是响应状态码，所以传递进去
+              reject(xhr.status);
+            }
+          }
+        })
+      })
+      p.then((err) => {
+        console.log(err);
+      }, (data) => {
+        console.warn(data);
+      })
+
+    });
+  </script>
+</body>
+
+</html>

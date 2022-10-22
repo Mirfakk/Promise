@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>串联多个任务，通过then</title>
+</head>
+
+<body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('ok');
+        // reject('err1');
+      }, 1000);
+    })
+
+    p.then((value) => {
+      // console.log(111);
+      throw '失败了';
+    }).then((value) => {
+      console.log(222);
+    }).then((value) => {
+      console.log(333)
+    }).catch((reason) => {
+      //在最末端用catch接收所有的失败结果，只要前面出现任一失败，都会在最后面的catch回调函数中体现
+      console.warn(reason);
+    })
+  </script>
+</body>
+
+</html>

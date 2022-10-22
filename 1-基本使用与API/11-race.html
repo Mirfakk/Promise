@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('ok1');
+      }, 1000)
+    })
+    let p2 = Promise.resolve('Sussess');
+    let p3 = Promise.resolve('Oh Yeah');
+    let p4 = Promise.reject('Oh Yeah111');
+
+    //第一个结果是成功，则rece也是成功，失败也就是失败，不看其他的结果
+    const race = Promise.race([p1, p2, p3, p4]);
+    console.log(race);
+  </script>
+</body>
+
+</html>

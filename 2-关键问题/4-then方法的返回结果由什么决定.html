@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      resolve('ok');
+    })
+
+    //执行then方法
+    //如果来接收then的结果
+    let result = p.then((value) => {
+      // console.log(value);
+      //1.如果是throw抛出异常，那么这里新promise对象的状态为rejected
+      // throw '出现异常';
+      //2.如果是 非 promise对象，状态为成功fulfilled,PromiseResult为返回的数据
+      // return '111';
+      //3.如果是 promise对象，则状态以这个promise对象的状态为准
+      return new Promise((resolve, reject) => {
+        // resolve('hello!');
+        reject('error');
+      })
+    }, (reason) => {
+      console.log(reason);
+    })
+    console.log(result);
+  </script>
+</body>
+
+</html>

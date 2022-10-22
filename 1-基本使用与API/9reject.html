@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //在reject中，无论传递什么类型的值，返回的结果都是失败
+    let p1 = Promise.reject(111);
+    //即便传递的是成功的promise对象，返回的结果也是失败
+    let p2 = Promise.reject(new Promise((reslove, reject) => {
+      reslove('ok!');//这里失败的结果是传递进来的成功的结果
+    }))
+    console.log(p2);
+  </script>
+</body>
+
+</html>

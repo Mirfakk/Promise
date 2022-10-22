@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //如果传入的参数为“非promise类型的对象”，例如数字，字符串等，则返回的结果为成功的promise对象
+    //如果传入的参数为 promise对象，则参数的结果决定了 reslove 的结果
+    let p1 = Promise.resolve(11);
+    let p2 = Promise.resolve(new Promise((resolve, reject) => {
+      // resolve('ok!');
+      reject('error!');
+    }))
+    // console.log(p1);
+    console.log(p2);//如果成功，这里打印出来的就是 ok！
+    //如果是执行reject，那么浏览器控制台会报错，这是由于没有回调函数对reject失败的结果进行处理，此时需要使用catch对失败结果进行处理
+    p2.catch((reason) => {
+      console.log(reason);
+    })
+
+  </script>
+</body>
+
+</html>
