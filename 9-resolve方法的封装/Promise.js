@@ -123,3 +123,20 @@ Promise.prototype.then = function(onResolved, onRejected) {
 Promise.prototype.catch = function(onRejected) {
   return this.then(undefined,onRejected);
 }
+
+//resolve方法属于Promise函数对象,接收参数
+Promise.resolve = function(value) {
+  //返回结果是Promise对象
+  return new Promise((resolve, reject) => {
+    if (value instanceof Promise) {
+      value.then(v => {
+        resolve(v);
+      }, r => {
+        reject(r);
+      })
+    }else{
+      //结果不是Promise对象，那就设置为成功
+      resolve(value);
+    }
+  })
+}
